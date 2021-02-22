@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>qSlicerSettingsDeveloperPanel</class>
+ <widget class="ctkSettingsPanel" name="qSlicerSettingsDeveloperPanel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>305</width>
+    <height>121</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Developer</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="DeveloperModeEnabledLabel">
+     <property name="text">
+      <string>Enable developer mode:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QCheckBox" name="DeveloperModeEnabledCheckBox">
+     <property name="toolTip">
+      <string>Run the application in developer mode: testing modules are shown in the module list, Reload&amp;Test section is shown in scripted modules user interface, CLI module input and output files are not deleted after module execution</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="QtTestingEnabledLabel">
+     <property name="text">
+      <string>Enable QtTesting:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QCheckBox" name="QtTestingEnabledCheckBox">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="SelfTestMessageDelayLabel">
+     <property name="text">
+      <string>Self-test message delay:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="ctkSliderWidget" name="SelfTestMessageDelaySlider">
+     <property name="toolTip">
+      <string>Time to wait before resuming self-test execution and hiding messages displayed to the user</string>
+     </property>
+     <property name="decimals">
+      <number>0</number>
+     </property>
+     <property name="singleStep">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="pageStep">
+      <double>100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>2000.000000000000000</double>
+     </property>
+     <property name="suffix">
+      <string>ms</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="QtDesignerLabel">
+     <property name="text">
+      <string>Qt Designer:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="QtDesignerButton">
+       <property name="text">
+        <string>launch</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ctkSettingsPanel</class>
+   <extends>QWidget</extends>
+   <header>ctkSettingsPanel.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkSliderWidget</class>
+   <extends>QWidget</extends>
+   <header>ctkSliderWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

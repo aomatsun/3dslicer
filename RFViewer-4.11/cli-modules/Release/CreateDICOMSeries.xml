@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executable>
+  <category>Converters</category>
+  <title>Create a DICOM Series</title>
+  <description><![CDATA[Create a DICOM Series from a Slicer volume. User can specify values for selected DICOM tags in the UI. Given the number of tags DICOM series have, it is impossible to expose all tags in UI. So only important tags can be set by the user.]]></description>
+  <version>0.1.0.$Revision$(alpha)</version>
+  <documentation-url>https://www.slicer.org/slicerWiki/index.php/Documentation/Nightly/Modules/CreateDICOMSeries</documentation-url>
+  <license/>
+  <contributor>Bill Lorensen (GE)</contributor>
+  <acknowledgements><![CDATA[This command module was derived from Insight/Examples (copyright) Insight Software Consortium]]></acknowledgements>
+  <parameters advanced="true">
+    <label>Patient Parameters</label>
+    <description><![CDATA[Parameters that apply to a patient]]></description>
+    <string>
+      <name>patientName</name>
+      <longflag>--patientName</longflag>
+      <description><![CDATA[The name of the patient (0010,0010)]]></description>
+      <label>Patient Name</label>
+      <default></default>
+    </string>
+    <string>
+      <name>patientID</name>
+      <longflag>--patientID</longflag>
+      <description><![CDATA[The patient ID (0010,0020)]]></description>
+      <label>Patient ID</label>
+      <default>123456</default>
+    </string>
+    <string>
+      <name>patientBirthDate</name>
+      <longflag>--patientBirthDate</longflag>
+      <description><![CDATA[Patient birth date (0010,0030)]]></description>
+      <label>Patient Birth Date</label>
+      <default>20060101</default>
+    </string>
+    <string>
+      <name>patientSex</name>
+      <longflag>--patientSex</longflag>
+      <description><![CDATA[Patient sex (0010,0040)]]></description>
+      <label>Patient Sex</label>
+      <default>M</default>
+    </string>
+    <string>
+      <name>patientComments</name>
+      <longflag>--patientComments</longflag>
+      <description><![CDATA[Patient comments (0010,4000)]]></description>
+      <label>Patient Comments</label>
+      <default>None</default>
+    </string>
+    
+    <string>
+      <name>instanceCreationDate</name>
+      <longflag>--instanceCreationDate</longflag>
+      <description><![CDATA[The patient ID (0008,0012)]]></description>
+      <label>Instance Creation Date</label>
+      <default></default>
+    </string>
+    <string>
+      <name>instanceCreationTime</name>
+      <longflag>--instanceCreationTime</longflag>
+      <description><![CDATA[The patient ID (0008,0013)]]></description>
+      <label>Instance Creation Time</label>
+      <default></default>
+    </string>
+    <string>
+      <name>specificCharacterSet</name>
+      <longflag>--specificCharacterSet</longflag>
+      <description><![CDATA[The patient ID (0008,0005)]]></description>
+      <label>Specific Character Set</label>
+      <default>ISO 2022 IR 87</default>
+    </string>
+    <string>
+      <name>institutionName</name>
+      <longflag>--institutionName</longflag>
+      <description><![CDATA[The patient ID (0008,0080)]]></description>
+      <label>Institution Name</label>
+      <default></default>
+    </string> 
+    <string>
+      <name>contrastBolusAgent</name>
+      <longflag>--contrastBolusAgent</longflag>
+      <description><![CDATA[The patient ID (0008,0010)]]></description>
+      <label>Contrast / Bolus Agent</label>
+      <default>CONTRAST</default>
+    </string> 
+    <string>
+      <name>scanOptions</name>
+      <longflag>--scanOptions</longflag>
+      <description><![CDATA[The patient ID (0008,0022)]]></description>
+      <label>Scan Options</label>
+      <default>CIRCULAR</default>
+    </string> 
+    <string>
+      <name>patientPosition</name>
+      <longflag>--patientPosition</longflag>
+      <description><![CDATA[The patient ID (0008,5100)]]></description>
+      <label>Patient Position</label>
+      <default>HFS</default>
+    </string>
+    <string>
+      <name>protocolName</name>
+      <longflag>--protocolName</longflag>
+      <description><![CDATA[The patient ID (0008,1013)]]></description>
+      <label>Protocol Name</label>
+      <default>COU 2 mm/Neck/Hx</default>
+    </string>   
+    <string>
+      <name>distanceSourcetoDetector</name>
+      <longflag>--distanceSourcetoDetector</longflag>
+      <description><![CDATA[The patient ID (0008,1110)]]></description>
+      <label>Distance Source to Detector</label>
+      <default>630</default>
+    </string> 
+    <string>
+      <name>distanceSourcetoPatient</name>
+      <longflag>--distanceSourcetoPatient</longflag>
+      <description><![CDATA[The patient ID (0008,1111)]]></description>
+      <label>Distance Source to Patient</label>
+      <default>430</default>
+    </string> 
+    <string>
+      <name>rotationDirection</name>
+      <longflag>--rotationDirection</longflag>
+      <description><![CDATA[The patient ID (0008,1140)]]></description>
+      <label>Rotation Direction</label>
+      <default>CW</default>
+    </string> 
+    <string>
+      <name>filterType</name>
+      <longflag>--filterType</longflag>
+      <description><![CDATA[The patient ID (0008,1140)]]></description>
+      <label>Filter Type</label>
+      <default>B</default>
+    </string> 
+    <string>
+      <name>convolutionKernel</name>
+      <longflag>--convolutionKernel</longflag>
+      <description><![CDATA[The patient ID (0008,1210)]]></description>
+      <label>Convolution Kernel</label>
+      <default>B</default>
+    </string> 
+    <string>
+      <name>acquisitionNumber</name>
+      <longflag>--acquisitionNumber</longflag>
+      <description><![CDATA[The patient ID (0020,0012)]]></description>
+      <label>Acquisition Number</label>
+      <default>0</default>
+    </string> 
+    <string>
+      <name>windowCenter</name>
+      <longflag>--windowCenter</longflag>
+      <description><![CDATA[The patient ID (0028,1050)]]></description>
+      <label>Window Center</label>
+      <default>3400</default>
+    </string> 
+    <string>
+      <name>windowWidth</name>
+      <longflag>--windowWidth</longflag>
+      <description><![CDATA[The patient ID (0028,1051)]]></description>
+      <label>Window Width</label>
+      <default>10500</default>
+    </string> 
+
+    <string>
+      <name>transferSyntaxUID</name>
+      <longflag>--transferSyntaxUID</longflag>
+      <description><![CDATA[The patient ID (0002,0010)]]></description>
+      <label>Transfer Syntax UID</label>
+      <default></default>
+    </string>
+    <string>
+      <name>implementationClassUID</name>
+      <longflag>--implementationClassUID</longflag>
+      <description><![CDATA[The patient ID (0002,0012)]]></description>
+      <label>Implementation Class UID</label>
+      <default></default>
+    </string>
+    <string>
+      <name>implementationVersionName</name>
+      <longflag>--implementationVersionName</longflag>
+      <description><![CDATA[The patient ID (0002,0013)]]></description>
+      <label>Implementation Version Name</label>
+      <default></default>
+    </string>
+    <string>
+      <name>sourceApplicationEntityTitle</name>
+      <longflag>--sourceApplicationEntityTitle</longflag>
+      <description><![CDATA[The patient ID (0002,0016)]]></description>
+      <label>Source Application Entity Title</label>
+      <default></default>
+    </string>
+    <string>
+      <name>SOPInstanceUID</name>
+      <longflag>--SOPInstanceUID</longflag>
+      <description><![CDATA[The patient ID (0008,0018)]]></description>
+      <label>SOPInstance UID</label>
+      <default></default>
+    </string>
+    <string>
+      <name>instanceNumber</name>
+      <longflag>--instanceNumber</longflag>
+      <description><![CDATA[The patient ID (0002,0013)]]></description>
+      <label>Instance Number</label>
+      <default></default>
+    </string>
+    <string>
+      <name>rows</name>
+      <longflag>--rows</longflag>
+      <description><![CDATA[The patient ID (0028,0010)]]></description>
+      <label>Rows</label>
+      <default></default>
+    </string>
+    <string>
+      <name>columns</name>
+      <longflag>--columns</longflag>
+      <description><![CDATA[The patient ID (0028,0011)]]></description>
+      <label>Columns</label>
+      <default></default>
+    </string>
+  </parameters>
+  <parameters advanced="true">
+    <label>Study Parameters</label>
+    <description><![CDATA[Parameters that apply to a study]]></description>
+    <string>
+      <name>studyID</name>
+      <longflag>--studyID</longflag>
+      <description><![CDATA[The study ID (0020,0010)]]></description>
+      <label>Study ID</label>
+      <default>123456</default>
+    </string>
+    <string>
+      <name>studyDate</name>
+      <longflag>--studyDate</longflag>
+      <description><![CDATA[The date of the study (0008,0020)]]></description>
+      <label>Study Date</label>
+      <default>20060101</default>
+    </string>
+    <string>
+      <name>studyTime</name>
+      <longflag>--studyTime</longflag>
+      <description><![CDATA[The time of the study (0008,0030)]]></description>
+      <label>Study Time</label>
+      <default></default>
+    </string>
+    <string>
+      <name>studyComments</name>
+      <longflag>--studyComments</longflag>
+      <description><![CDATA[Study comments (0032,4000)]]></description>
+      <label>Study Comments</label>
+      <default>None</default>
+    </string>
+    <string>
+      <name>studyDescription</name>
+      <longflag>--studyDescription</longflag>
+      <description><![CDATA[Study description (0008,1030)]]></description>
+      <label>Study Descriptions</label>
+      <default>None</default>
+    </string>
+    <string>
+      <name>modality</name>
+      <longflag>--modality</longflag>
+      <description><![CDATA[Modality (0008,0060)]]></description>
+      <label>Modality</label>
+      <default>CT</default>
+    </string>
+    <string>
+      <name>manufacturer</name>
+      <longflag>--manufacturer</longflag>
+      <description><![CDATA[Manufacturer (0008,0070)]]></description>
+      <label>Manufacturer</label>
+      <default>GE Medical Systems</default>
+    </string>
+    <string>
+      <name>model</name>
+      <longflag>--model</longflag>
+      <description><![CDATA[model (0008,1090)]]></description>
+      <label>Model</label>
+      <default>None</default>
+    </string>
+
+
+  </parameters>
+  <parameters advanced="true">
+    <label>Series Parameters</label>
+    <description><![CDATA[Parameters that apply to a series]]></description>
+    <string>
+      <name>seriesNumber</name>
+      <longflag>--seriesNumber</longflag>
+      <description><![CDATA[The series number (0020,0011)]]></description>
+      <label>Series Number</label>
+      <default>123456</default>
+    </string>
+    <string>
+      <name>seriesDescription</name>
+      <longflag>--seriesDescription</longflag>
+      <description><![CDATA[Series description (0008,103E)]]></description>
+      <label>Series Description</label>
+      <default>None</default>
+    </string>
+    <string>
+      <name>seriesDate</name>
+      <longflag>--seriesDate</longflag>
+      <description><![CDATA[The date of the series (0008,0021)]]></description>
+      <label>Series Date</label>
+      <default></default>
+    </string>
+    <string>
+      <name>seriesTime</name>
+      <longflag>--seriesTime</longflag>
+      <description><![CDATA[The time of the series (0008,0031)]]></description>
+      <label>Series Time</label>
+      <default></default>
+    </string>
+  </parameters>
+  <parameters advanced="true">
+    <label>Image Parameters</label>
+    <description><![CDATA[Parameters that apply to the images and data in each image]]></description>
+    <double>
+      <label>Rescale intercept</label>
+      <name>rescaleIntercept</name>
+      <longflag>--rescaleIntercept</longflag>
+      <description><![CDATA[Rescale interscept (0028,1052). Converts pixel values on disk to pixel values in memory. (Pixel value in memory) = (Pixel value on disk) * rescaleSlope + rescaleIntercept.  Default is 0.0. Data values are converted on write (the data is scaled and shifted so that the slope and interscept will bring it back to the current intensity range).]]></description>
+      <default>0.0000</default>
+    </double>
+    <double>
+      <label>Rescale slope</label>
+      <name>rescaleSlope</name>
+      <longflag>--rescaleSlope</longflag>
+      <description><![CDATA[Rescale slope (0028,1053). Converts pixel values on disk to pixel values in memory. (Pixel value in memory) = (Pixel value on disk) * rescaleSlope + rescaleInterscept.  Default is 1.0. Data values are converted on write (the data is scaled and shifted so that the slope and interscept will bring it back to the current intensity range).]]></description>
+      <default>1.0000</default>
+    </double>
+    <string>
+      <name>contentDate</name>
+      <longflag>--contentDate</longflag>
+      <description><![CDATA[The date of the image content (0008,0023)]]></description>
+      <label>Content Date</label>
+      <default></default>
+    </string>
+    <string>
+      <name>contentTime</name>
+      <longflag>--contentTime</longflag>
+      <description><![CDATA[The time of the image content (0008,0033)]]></description>
+      <label>Content Time</label>
+      <default></default>
+    </string>
+  </parameters>
+  <parameters advanced="true">
+    <label>Unique Identifiers (UIDs)</label>
+    <description><![CDATA[Unique identifiers (UIDs) that allow appending frames to existing studies or series. To generate UIDs automatically, leave all of them blank.]]></description>
+    <string>
+      <name>studyInstanceUID</name>
+      <longflag>--studyInstanceUID</longflag>
+      <description><![CDATA[The study instance UID (0020,000d)]]></description>
+      <label>Study Instance UID</label>
+      <default></default>
+    </string>
+    <string>
+      <name>seriesInstanceUID</name>
+      <longflag>--seriesInstanceUID</longflag>
+      <description><![CDATA[The series instance UID (0020,000e)]]></description>
+      <label>Series Instance UID</label>
+      <default></default>
+    </string>
+    <string>
+      <name>frameOfReferenceInstanceUID</name>
+      <longflag>--frameOfReferenceInstanceUID</longflag>
+      <description><![CDATA[The frame of reference instance UID (0020,0052)]]></description>
+      <label>Frame of Reference Instance UID</label>
+      <default></default>
+    </string>
+  </parameters>
+  <parameters>
+    <label>Input</label>
+    <description><![CDATA[Input parameters]]></description>
+    <image>
+      <name>inputVolume</name>
+      <label>Input Volume</label>
+      <channel>input</channel>
+      <index>0</index>
+      <description><![CDATA[Input volume to be resampled]]></description>
+    </image>
+  </parameters>
+  <parameters>
+    <label>Output</label>
+    <description><![CDATA[Output parameters]]></description>
+    <directory>
+      <name>dicomDirectory</name>
+      <longflag>--dicomDirectory</longflag>
+      <description><![CDATA[The directory to contain the DICOM series.]]></description>
+      <label>DICOM Directory</label>
+      <default>./</default>
+    </directory>
+    <string>
+      <name>dicomPrefix</name>
+      <longflag>--dicomPrefix</longflag>
+      <description><![CDATA[The prefix of the DICOM filename.]]></description>
+      <label>DICOM filename prefix</label>
+      <default>IMG</default>
+    </string>
+    <string>
+      <name>dicomNumberFormat</name>
+      <longflag>--dicomNumberFormat</longflag>
+      <description><![CDATA[The printf-style format to be used when creating the per-slice DICOM filename.]]></description>
+      <label>DICOM file number format</label>
+      <default>%04d</default>
+    </string>
+    <boolean>
+      <name>reverseImages</name>
+      <longflag>--reverseImages</longflag>
+      <description><![CDATA[Reverse the slices.]]></description>
+      <label>Reverse Slices</label>
+      <default>false</default>
+    </boolean>
+    <boolean>
+      <name>useCompression</name>
+      <longflag>--useCompression</longflag>
+      <description><![CDATA[Compress the output pixel data.]]></description>
+      <label>Use Compression</label>
+      <default>false</default>
+    </boolean>
+    <label>Filter Settings</label>
+    <string-enumeration>
+      <name>Type</name>
+      <label>Output Type:</label>
+      <description><![CDATA[Type for the new output volume.]]></description>
+      <longflag>--type</longflag>
+      <flag>--t</flag>
+      <default>Short</default>
+      <element>UnsignedChar</element>
+      <element>Char</element>
+      <element>UnsignedChar</element>
+      <element>Short</element>
+      <element>UnsignedShort</element>
+      <element>Int</element>
+      <element>UnsignedInt</element>
+    </string-enumeration>
+  </parameters>
+</executable>

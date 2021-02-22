@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executable>
+  <category>Converters</category>
+  <title>simpleRTK</title>
+  <description><![CDATA[CLI application around RTK FDK reconstruction tool]]></description>
+  <version>0.0.1</version>
+  <documentation-url>http://www.openrtk.org/</documentation-url>
+  <license>Slicer</license>
+  <contributor>Julien Finet (Kitware SAS), Simon RIT (Creatis)</contributor>
+  <acknowledgements></acknowledgements>
+  <parameters>
+    <label>IO</label>
+    <string>
+      <name>path</name>
+      <flag>p</flag>
+      <longflag>path</longflag>
+      <label>Path</label>
+      <description><![CDATA[Path containing projections]]></description>
+    </string>
+    <string>
+      <name>regexp</name>
+      <flag>r</flag>
+      <longflag>regexp</longflag>
+      <label>Regexp</label>
+      <description><![CDATA[Regular expression to select projection files in path]]></description>
+    </string>
+    <file fileExtensions=".mhd,.mha,.nrrd">
+      <name>output</name>
+      <label>Output volume</label>
+      <flag>o</flag>
+      <longflag>output</longflag>
+      <description><![CDATA[Output file name]]></description>
+    </file>
+  </parameters>
+  <parameters>
+    <label>Geometry</label>
+    <description><![CDATA[Input/output parameters]]></description>
+    <integer>
+      <name>nproj</name>
+      <longflag>nproj</longflag>
+      <flag>n</flag>
+      <label>Number of projections</label>
+      <description><![CDATA[Number of projections]]></description>
+      <default>256</default>
+    </integer>
+    <double>
+      <name>sdd</name>
+      <longflag>sdd</longflag>
+      <label>Distance to detector</label>
+      <description><![CDATA[Source to detector distance (mm)]]></description>
+      <default>1536</default>
+    </double>
+    <double>
+      <name>sid</name>
+      <longflag>sid</longflag>
+      <label>Distance to isocenter</label>
+      <description><![CDATA[Source to isocenter distance (mm)]]></description>
+      <default>1000</default>
+    </double>
+    <double>
+      <name>first_angle</name>
+      <longflag>first_angle</longflag>
+      <flag>f</flag>
+      <label>First angle</label>
+      <description><![CDATA[First angle in degrees]]></description>
+      <default>0</default>
+    </double>
+    <double>
+      <name>proj_iso_x</name>
+      <longflag>proj_iso_x</longflag>
+      <label>X coordinate of detector</label>
+      <description><![CDATA[X coordinate of detector point (0,0) mm in rotated coordinate system]]></description>
+      <default>0</default>
+    </double>
+    <double>
+      <name>proj_iso_y</name>
+      <longflag>proj_iso_y</longflag>
+      <label>Y coordinate of detector</label>
+      <description><![CDATA[Y coordinate of detector point (0,0) mm in rotated coordinate system]]></description>
+      <default>0</default>
+    </double>
+	  <double>
+		  <name>source_x</name>
+		  <longflag>source_x</longflag>
+		  <label>X coordinate of source</label>
+		  <description><![CDATA[X coordinate of source in rotated coordinate system]]></description>
+		  <default>0</default>
+	  </double>
+	  <double>
+		  <name>source_y</name>
+		  <longflag>source_y</longflag>
+		  <label>Y coordinate of source</label>
+		  <description><![CDATA[Y coordinate of source in rotated coordinate system]]></description>
+		  <default>0</default>
+	  </double>
+	  <double>
+      <name>arc</name>
+      <longflag>arc</longflag>
+      <flag>a</flag>
+      <label>Angular arc</label>
+      <description><![CDATA[Angular arc covevered by the acquisition in degrees]]></description>
+      <default>360</default>
+    </double>
+    <double-vector>
+      <name>neworigin</name>
+      <longflag>neworigin</longflag>
+      <label>New origin</label>
+      <description><![CDATA[New origin of input projections (before pre-processing)]]></description>
+    </double-vector>
+    <double>
+      <name>in_angle</name>
+      <longflag>in_angle</longflag>
+      <label>In plane angle</label>
+      <description><![CDATA[In plane angle]]></description>
+      <default>0</default>
+    </double>
+    <double>
+      <name>out_angle</name>
+      <longflag>out_angle</longflag>
+      <label>Out of plane angle</label>
+      <description><![CDATA[Out of plane angle]]></description>
+      <default>0</default>
+    </double>
+    <double>
+      <name>rad_crop_perc</name>
+      <longflag>rad_crop_perc</longflag>
+      <label>Radius Crop Percentage</label>
+      <description><![CDATA[Percentage of the cylinder to crop because of beam hardening]]></description>
+      <default>7</default>
+    </double>	
+  </parameters>
+  <parameters>
+    <label>Preprocessing</label>
+    <double>
+      <name>airthres</name>
+      <longflag>airthres</longflag>
+      <label>Air threshold</label>
+      <description><![CDATA[Boellaard scatter correction: air threshold]]></description>
+      <default>32000</default>
+    </double>
+    <double>
+      <name>i0</name>
+      <longflag>i0</longflag>
+      <label>I0 value</label>
+      <description><![CDATA[I0 value, i.e. value when no attenuation. 0 means auto]]></description>
+      <default>0</default>
+    </double>
+    <double>
+      <name>idark</name>
+      <longflag>idark</longflag>
+      <label>IDark value</label>
+      <description><![CDATA[IDark value, i.e. value when beam is off]]></description>
+      <default>0</default>
+    </double>
+    <integer-vector>
+      <name>radius</name>
+      <longflag>radius</longflag>
+      <label>Radius</label>
+      <description><![CDATA[Radius of neighborhood for conditional median filtering]]></description>
+      <default>0</default>
+    </integer-vector>
+    <double>
+      <name>multiplier</name>
+      <longflag>multiplier</longflag>
+      <label>Multiplier</label>
+      <description><![CDATA[Threshold multiplier for conditional median filtering]]></description>
+      <default>0</default>
+    </double>
+  </parameters>
+  <parameters>
+    <label>FDK</label>
+    <string-enumeration>
+      <name>hardware</name>
+      <longflag>hardware</longflag>
+      <description>Hardware used for computation</description>
+      <label>Hardware</label>
+      <default>cpu</default>
+      <element>cpu</element>
+      <element>cuda</element>
+    </string-enumeration>
+    <double>
+      <name>hann</name>
+      <longflag>hann</longflag>
+      <label>Hann window</label>
+      <description><![CDATA[Cut frequency for hann window in ]0, 1] (0. disables it)]]></description>
+      <default>0</default>
+      <minimum>0</minimum>
+      <maximum>1.02</maximum>
+    </double>
+    <boolean>
+      <name>lowmem</name>
+      <longflag>lowmem</longflag>
+      <flag>l</flag>
+      <label>Low memory</label>
+      <description><![CDATA[Load only one projection per thread in memory]]></description>
+      <default>false</default>
+    </boolean>
+    <integer>
+      <name>divisions</name>
+      <longflag>divisions</longflag>
+      <flag>d</flag>
+      <label>Divisions</label>
+      <description><![CDATA[Streaming option: number of stream divisions of the CT]]></description>
+      <default>1</default>
+    </integer>
+    <integer>
+      <name>subsetsize</name>
+      <longflag>subsetsize</longflag>
+      <label>Subset size</label>
+      <description><![CDATA[Streaming option: number of projections processed at a time]]></description>
+      <default>16</default>
+    </integer>
+    <boolean>
+      <name>nodisplaced</name>
+      <longflag>nodisplaced</longflag>
+      <label>No displaced</label>
+      <description><![CDATA[Disable the displaced detector filter]]></description>
+      <default>false</default>
+    </boolean>
+  </parameters>
+  <parameters>
+    <label>Output</label>
+    <boolean>
+      <name>mask</name>
+      <longflag>mask</longflag>
+      <flag>m</flag>
+      <label>Mask</label>
+      <description><![CDATA[Mask outside field of view]]></description>
+      <default>true</default>
+    </boolean>
+    <double>
+      <name>airvalue</name>
+      <longflag>airvalue</longflag>
+      <label>Air value</label>
+      <description><![CDATA[Pixel intensity for air. Ignored if equal to Water value.]]></description>
+      <default>0.00000000</default>
+    </double>
+    <double>
+      <name>watervalue</name>
+      <longflag>watervalue</longflag>
+      <label>Water value</label>
+      <description><![CDATA[Pixel intensity for water. Ignored if equal to Air value.]]></description>
+      <default>0.00000000</default>
+    </double>
+  <double-vector>
+    <name>origin</name>
+    <longflag>origin</longflag>
+    <label>Output origin</label>
+    <description><![CDATA[Output origin]]></description>
+    <default></default>
+  </double-vector>
+  <integer-vector>
+    <name>dimension</name>
+    <longflag>dimension</longflag>
+    <label>Output dimension</label>
+    <description><![CDATA[Dimension]]></description>
+    <default>256</default>
+  </integer-vector>
+  <double-vector>
+    <name>spacing</name>
+    <longflag>spacing</longflag>
+    <label>Output spacing</label>
+    <description><![CDATA[Output spacing]]></description>
+    <default>1</default>
+  </double-vector>
+  <double-vector>
+    <name>direction</name>
+    <longflag>direction</longflag>
+    <label>Output direction</label>
+    <description><![CDATA[Output direction]]></description>
+    <default>1, 0, 0, 0, 1, 0, 0, 0, 1</default>
+  </double-vector>
+  <string-enumeration>
+    <name>scalarType</name>
+    <label>Output scalar type</label>
+    <description><![CDATA[Scalar data type for the new output volume.]]></description>
+    <longflag>scalarType</longflag>
+    <element>Input</element>
+    <element>Char</element>
+    <element>UnsignedChar</element>
+    <element>Short</element>
+    <element>UnsignedShort</element>
+    <element>Int</element>
+    <element>UnsignedInt</element>
+    <element>Float</element>
+    <element>Double</element>
+    <default>Input</default>
+  </string-enumeration>
+  </parameters>
+</executable>
